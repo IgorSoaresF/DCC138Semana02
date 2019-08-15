@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cycka Blyat</title>
+</head>
+<body style="background-color: deeppink">
+
+        <canvas>
+        </canvas>
+
+        <script>
+            var canvas = document.querySelector("canvas");
+            var ctx = canvas.getContext("2d");
+            canvas.height = 649;
+            canvas.width = 1350;
+            var dt = 0;
+            var previousFrame = 0;
+            var t = 0;
+
+            function drawTerrain(){
+                ctx.fillStyle = "purple";
+                ctx.fillRect(0,0,canvas.width,canvas.height);
+
+                ctx.fillStyle = "black";
+                ctx.fillText(t, 10,10);
+                ctx.fillText(dt, 10,20);
+            }
+
+            function drawCharacter(x,y){
+            ctx.fillStyle = "green";
+            ctx.fillRect(x,y,cw,ch);
+            ctx.strokeStyle = "darkgreen";
+            ctx.lineWidth = 5;
+            ctx.strokeRect(x,y,cw,ch);
+            }
+
+            function step(t){
+                drawTerrain();    
+                for ( i = 0; i<7 ; i++){
+                dt = (t - previousFrame)/1000;
+                if(pcx < auxpcx + cw/2 ){
+                    auxX = auxX * (-1);
+                    pcx = auxpcx;
+                }
+                if (pcx > auxpcx - cw/2){
+                    auxX = auxX * (-1);
+                    pcx = auxpcx;
+                }
+
+                if(pcy < auxpcy + cw/2){
+                    auxY = auxY * (-1);
+                    pcy = auxpcy;
+                }
+                if( pcy > auxpcy - cw/2){
+                    auxY = auxY * (-1);
+                    pcy = auxpcy;
+                }
+                             
+                pcx = pcx+auxX * dt * Math.floor(Math.random()* (vMax - vMin) + vMin);
+                pcy = pcy+auxY * dt * Math.floor(Math.random()* (vMax - vMin) + vMin);
+                //drawCharacter(auxpcx,auxpcy);
+                cw = cw/10;
+                ch = cw;
+                drawCharacter(pcx,pcy);
+                cw = cw*10;
+                ch = cw;
+                }
+                previousFrame = t;
+                requestAnimationFrame(step);
+            }               
+            
+            function inputKey(e){
+                console.log(e.keyCode);
+                if(e.keyCode == 37){
+                    auxpcx -= vGeral*dt;
+                }
+                if(e.keyCode == 39){
+                    auxpcx += vGeral*dt;
+                }
+                if(e.keyCode == 40){
+                    auxpcy += vGeral*dt;
+                }
+                if(e.keyCode == 38){
+                    auxpcy -= vGeral*dt;
+                }
+            }
+            
+
+            var cw = canvas.width/10;
+            var ch = cw;
+            var auxX = 1;
+            var auxY = 1;
+            var auxXx = 1;
+            var auxYy = 1;
+            var vGeral = 1000;
+            var vMax = 5000;
+            var vMin = 300;
+            var pcx = 20;
+            var pcy = 20;
+            var auxpcx = 20;
+            var auxpcy = 20;
+
+            addEventListener("keydown",inputKey);
+            requestAnimationFrame(step);
+
+
+
+            //////////////////////////////////////////////////////////////////////////////////
+            /////
+            //////////////////////////////////////////////////////////////////////////////////
+
+        </script>
+</body>
+</html>

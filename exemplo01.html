@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body style="background-color: deeppink">
+    <marquee style="color: blueviolet">
+        <h1>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</h1>
+    </marquee>
+    <br>
+    <marquee style="color:darkorange" >
+            <h1>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</h1>
+    </marquee>
+    <br>
+    <marquee style="color: blueviolet">
+            <h1>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</h1>
+    </marquee>
+    <br>
+    <marquee>
+        <canvas width="600" height="300">
+        </canvas>
+    </marquee>
+        <script>
+            var canvas = document.querySelector("canvas");
+            var ctx = canvas.getContext("2d");
+            canvas.height = 300;
+            canvas.width = 600;
+
+            ctx.fillStyle = "purple";
+            ctx.fillRect(0,0,600,300);
+
+            
+            ctx.fillStyle = "yellow";
+            ctx.fillRect(0,105,600,45);
+
+            ctx.font = "italic bold 45px Arial";
+            ctx.fillStyle = "green";
+            ctx.fillText("AAAAAAAAAAAAAAAAAAAAAAAAAAA", 0,150);
+
+            ctx.strokeStyle = "blue";
+            ctx.lineWidth=10;
+            ctx.strokeRect(0,0,600,300);
+
+        </script>
+</body>
+</html>

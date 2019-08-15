@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body style="background-color: deeppink">
+    <marquee style="color: blueviolet">
+        <h1>BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB</h1>
+    </marquee>
+    <br>
+    <marquee style="color:darkorange" >
+            <h1>BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB</h1>
+    </marquee>
+    <br>
+    <marquee style="color: blueviolet">
+            <h1>BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB</h1>
+    </marquee>
+    <br>
+    <marquee>
+        <canvas width="600" height="300">
+        </canvas>
+    </marquee>
+        <script>
+            var canvas = document.querySelector("canvas");
+            var ctx = canvas.getContext("2d");
+            canvas.height = 300;
+            canvas.width = 600;
+
+            preencheRetangulo(0,0,canvas.width,canvas.height,"purple");
+
+            preencheRetangulo(0,105,600,45,"yellow");
+
+            ctx.font = "italic bold 45px Arial";
+            escreveTexto("BBBBBBBBBBBBBBBBBBBBBBBBBBB",0,150,"green");
+
+            contornaRetangulo(0,0,canvas.width,canvas.height, "blue", 10);
+
+            function preencheRetangulo (x,y,w,h,color){
+                ctx.fillStyle = color;
+                ctx.fillRect(x,y,w,h);
+            }
+
+            function contornaRetangulo (x,y,w,h , color, largura){
+                ctx.strokeStyle = color;
+                ctx.lineWidth = largura;
+                ctx.strokeRect(x,y,w,h);
+            }
+
+            function escreveTexto(texto,x,y,color){
+                ctx.fillStyle = color;
+                ctx.fillText(texto, x,y);
+            }
+        </script>
+</body>
+</html>
