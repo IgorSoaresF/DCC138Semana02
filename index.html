@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./Sprite.js"></script>
+    <title>Semana 03</title>
+</head>
+<body>
+    <canvas>
+
+    </canvas>
+    <script >
+        var canvas = document.querySelector("canvas");
+        var ctx = canvas.getContext("2d");
+        canvas.height = 600;
+        canvas.width = 1200;
+        var dt =0;
+        var anterior = 0;
+        var pc = new Sprite({ponto: 200});
+        var pc2 = new Sprite({vy:20});
+        var pc3 = new Sprite({x:canvas.width - 30,y: canvas.height-30, vx:-40});
+        var pc4 = new Sprite({x:canvas.width -30, y: canvas.height-30,vy:-20});
+        var npc = [];
+        var tiros = [];
+        var NNPC = 0;
+        var teclas = {
+            esquerda: 0,
+            cima: 0,
+            direita: 0,
+            baixo: 0,
+            espaco: 0
+        }
+        
+        for(var i =0; i<NNPC; i++){
+            npc[i] = new Sprite({vx: 0,x:Math.random()*canvas.height, y: Math.random()*canvas.width, color:"red"})
+        }
+        
+        function passo(t){
+            dt = (t-anterior)/1000; 
+            ctx.fillStyle = "green";
+            ctx.fillRect(0,0,canvas.width,canvas.height);
+
+            if (teclas.espaco && pc.atirando <= 0){
+                var tiro = new Sprite({
+                    x: pc.x,
+                    y: pc.y,
+                    w: 10,
+                    vx: 200 * Math.sign(pc.vx)*(1),
+                    vy: 200 * Math.sign(pc.vy)*(1),
+                    color: "white",
+                });
+                tiros.push(tiro);
+                pc.atirando = 0.2;
+                tiro = null;
+            }
+
+            pc.controlePorTeclas({teclas:teclas})       
+            pc.mover(dt);
+            for(var i =0; i<tiros.length; i++){
+                tiros[i].mover(dt);
+            }         
+            for(var i =0; i<NNPC; i++){
+                npc[i].perseguir({alvo:pc});
+                npc[i].mover(dt);
+            }
+            pc.desenhar(ctx);
+            for(var i = 0; i<NNPC; i++){
+                npc[i].desenhar(ctx);
+                npc[i].mover(dt);
+                if(npc[i].colidiuCom(pc)){
+                    npc[i].addPonto(pc);
+                    pc.removePonto();
+                    for(var i = 0; i<NNPC; i++){
+                        npc[i].x = Math.random()*canvas.width;
+                        npc[i].y = Math.random()*canvas.height;
+                    }
+                    
+                    pc.y = Math.random()*canvas.height;
+                    pc.x = Math.random()*canvas.width;
+                    
+                }
+            }
+
+            for(var i =0; i<tiros.length; i++){
+                tiros[i].desenhar(ctx);
+            } 
+
+            ctx.fillStyle = "white";
+            ctx.strokeStyle = "black";
+            ctx.font = "15px bold italic monospaced";
+            ctx.fillText(pc.getPonto(), 10, 30);
+            ctx.strokeText(pc.getPonto(), 10, 30);
+
+            for(var i = 0; i<NNPC; i++){
+                
+                ctx.fillText(npc[i].getPonto(), 10, 50+20*i);
+                ctx.strokeText(npc[i].getPonto(), 10, 50+20*i);
+            }
+
+            for(var i = tiros.lenght; i>=0; i--){
+                if (tiros[i].x > canvas.width || tiros[i].y > canvas.height){
+                    tiros.splice(i);
+                }
+            }
+
+            anterior = t;
+            requestAnimationFrame(passo);
+            
+        }
+        requestAnimationFrame(passo);
+
+        addEventListener("keydown",function(e){
+            switch (e.keyCode){
+                case 32:
+                    teclas.espaco = 1;
+                    break;
+                case 37:
+                    teclas.esquerda = 1;
+                    break;
+                case 38:
+                    teclas.cima = 1;
+                    break;
+                case 39:
+                    teclas.direita = 1;
+                    break;
+                case 40:
+                    teclas.baixo = 1;
+                    break;
+            }
+        })
+
+        addEventListener("keyup",function(e){
+            switch (e.keyCode){
+                case 32:
+                    teclas.espaco = 0;
+                    break;
+                case 37:
+                    teclas.esquerda = 0;
+                    break;
+                case 38:
+                    teclas.cima = 0;
+                    break;
+                case 39:
+                    teclas.direita = 0;
+                    break;
+                case 40:
+                    teclas.baixo = 0;
+                    break;
+            }
+        })
+    </script>
+</body>
+</html>
